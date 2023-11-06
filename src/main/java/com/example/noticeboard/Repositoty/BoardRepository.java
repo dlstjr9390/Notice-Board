@@ -57,22 +57,12 @@ public class BoardRepository {
         });
     }
 
-    public BoardResponseDto view(Long id,  BoardRequestDto requestDto){
-        String sql = "SELECT id, title, writer, contents, date FROM board WHERE id = ? ";
-        return null;
-    }
-
-    public void update(Long id, BoardRequestDto requestDto){
-        String sql = "UPDATE board SET title = ?, writer = ?, contents = ? WHERE id = ?";
-        jdbcTemplate.update(sql,requestDto.getTitle(),requestDto.getWriter(),requestDto.getTitle());
-    }
-
-    public Board findById(Long id){
-
-        String sql = "SELECT * FROM board WHERE id = ?";
+    public Board view(Long id){
+        String sql = "SELECT id,title, writer, contents, date FROM board WHERE id = ? ";
         return jdbcTemplate.query(sql,resultSet ->{
             if(resultSet.next()){
                 Board board = new Board();
+                board.setId(resultSet.getLong("id"));
                 board.setTitle(resultSet.getString("title"));
                 board.setWriter(resultSet.getString("writer"));
                 board.setContents(resultSet.getString("contents"));
@@ -83,4 +73,34 @@ public class BoardRepository {
             }
         },id);
     }
+
+    public void update(Long id,BoardRequestDto requestDto){
+        String sql = "UPDATE board SET title = ?, writer = ?, contents = ? WHERE id = ?";
+        jdbcTemplate.update(sql,requestDto.getTitle(),requestDto.getWriter(), requestDto.getTitle(),id);
+    }
+
+
+    public void delete(Long id) {
+        String sql = "DELETE FROM board WHERE id = ?";
+        jdbcTemplate.update(sql,id);
+    }
+
+    public Board findById(Long id){
+
+        String sql = "SELECT * FROM board WHERE id = ?";
+        return jdbcTemplate.query(sql,resultSet ->{
+            if(resultSet.next()){
+                Board board = new Board();
+                board.setTitle(resultSet.getString("title"));
+                board.setWriter(resultSet.getString("writer"));
+                board.setPassword(resultSet.getString("password"));
+                board.setContents(resultSet.getString("contents"));
+                board.setDate(resultSet.getDate("date"));
+                return board;
+            } else{
+                return null;
+            }
+        },id);
+    }
+
 }

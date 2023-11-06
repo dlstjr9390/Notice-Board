@@ -29,15 +29,21 @@ public class BoardController {
         return boardService.getBoards();
     }
 
-    @GetMapping("/detail")
-    public BoardResponseDto detailBoard(BoardResponseDto boardResponseDto){
+    @GetMapping("/board/{id}")
+    public BoardResponseDto detailBoard(@PathVariable Long id){
         BoardService boardService = new BoardService(jdbcTemplate);
-        return boardService.detailBoard(boardResponseDto.getId());
+        return boardService.detailBoard(id);
     }
 
     @PutMapping("/board/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto){
         BoardService boardService = new BoardService(jdbcTemplate);
+        return boardService.updateBoard(id,boardRequestDto);
+    }
 
+    @DeleteMapping("/board/{id}")
+    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto ){
+        BoardService boardService = new BoardService(jdbcTemplate);
+        return boardService.deleteBoard(id,boardRequestDto);
     }
 }
