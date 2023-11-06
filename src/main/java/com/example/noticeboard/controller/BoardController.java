@@ -11,39 +11,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class BoardController {
-    private final JdbcTemplate jdbcTemplate;
+    private final BoardService boardService;
 
     public BoardController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.boardService = new BoardService(jdbcTemplate);
     }
 
     @PostMapping("/board")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto){
-        BoardService boardService = new BoardService(jdbcTemplate);
         return boardService.createBoard(boardRequestDto);
     }
 
     @GetMapping("/board")
     public List<BoardResponseDto> getBoards(){
-        BoardService boardService = new BoardService(jdbcTemplate);
         return boardService.getBoards();
     }
 
     @GetMapping("/board/{id}")
     public BoardResponseDto detailBoard(@PathVariable Long id){
-        BoardService boardService = new BoardService(jdbcTemplate);
         return boardService.detailBoard(id);
     }
 
     @PutMapping("/board/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto){
-        BoardService boardService = new BoardService(jdbcTemplate);
         return boardService.updateBoard(id,boardRequestDto);
     }
 
     @DeleteMapping("/board/{id}")
     public Long deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto ){
-        BoardService boardService = new BoardService(jdbcTemplate);
         return boardService.deleteBoard(id,boardRequestDto);
     }
 }

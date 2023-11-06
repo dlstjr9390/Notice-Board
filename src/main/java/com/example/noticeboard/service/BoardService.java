@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 public class BoardService {
-    private final JdbcTemplate jdbcTemplate;
+    private final BoardRepository boardRepository;
 
     public BoardService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.boardRepository= new BoardRepository(jdbcTemplate);
     }
 
     public BoardResponseDto createBoard(BoardRequestDto requestDto){
         Board board = new Board(requestDto);
 
-        BoardRepository boardRepository = new BoardRepository(jdbcTemplate);
         Board insertBoard = boardRepository.insert(board);
 
         BoardResponseDto boardResponseDto = new BoardResponseDto(board);
@@ -28,19 +27,16 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> getBoards(){
-        BoardRepository boardRepository = new BoardRepository(jdbcTemplate);
         return boardRepository.findAll();
     }
 
     public BoardResponseDto detailBoard(Long id){
-        BoardRepository boardRepository = new BoardRepository(jdbcTemplate);
         Board board = boardRepository.view(id);
         BoardResponseDto boardResponseDto = new BoardResponseDto(board);
         return boardResponseDto;
     }
 
     public Long updateBoard(Long id,BoardRequestDto boardRequestDto){
-        BoardRepository boardRepository = new BoardRepository(jdbcTemplate);
 
         Board board = boardRepository.findById(id);
         if(board != null){
@@ -57,7 +53,6 @@ public class BoardService {
     }
 
     public Long deleteBoard(Long id, BoardRequestDto boardRequestDto) {
-        BoardRepository boardRepository = new BoardRepository(jdbcTemplate);
 
         Board board = boardRepository.findById(id);
         if(board != null){
