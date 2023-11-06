@@ -4,16 +4,14 @@ import com.example.noticeboard.Repositoty.BoardRepository;
 import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.entity.Board;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public BoardService(JdbcTemplate jdbcTemplate) {
-        this.boardRepository= new BoardRepository(jdbcTemplate);
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository= boardRepository;
     }
 
     public BoardResponseDto createBoard(BoardRequestDto requestDto){

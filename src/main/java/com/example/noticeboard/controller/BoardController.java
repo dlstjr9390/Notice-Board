@@ -3,7 +3,6 @@ package com.example.noticeboard.controller;
 import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.service.BoardService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +12,8 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
-    public BoardController(JdbcTemplate jdbcTemplate) {
-        this.boardService = new BoardService(jdbcTemplate);
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
     }
 
     @PostMapping("/board")
