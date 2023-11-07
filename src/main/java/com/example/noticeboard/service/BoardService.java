@@ -4,15 +4,28 @@ import com.example.noticeboard.Repositoty.BoardRepository;
 import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.entity.Board;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+@Service
 public class BoardService {
     private final BoardRepository boardRepository;
+
 
     public BoardService(BoardRepository boardRepository) {
         this.boardRepository= boardRepository;
     }
+
+//    public BoardService(ApplicationContext context) {
+//      1.'Bean' 이름으로 가져오기
+//      BoardRepository boardRepository = (BoardRepository) context.getBean("boardRepository");
+
+//      2.'Bean' 클래스 형식으로 가져오기
+//      BoardRepository boardRepository = context.getBean(BoardRepository.class);
+//      this.boardRepository = boardRepository;
+//    }
 
     public BoardResponseDto createBoard(BoardRequestDto requestDto){
         Board board = new Board(requestDto);
