@@ -39,7 +39,7 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> getBoards(){
-        return boardRepository.findAll().stream().map(BoardResponseDto::new).toList();
+        return boardRepository.findAllByOrderByModifiedAtDesc().stream().map(BoardResponseDto::new).toList();
     }
 
 //    public BoardResponseDto detailBoard(Long id){
