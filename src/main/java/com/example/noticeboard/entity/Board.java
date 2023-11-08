@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @Table(name="board")
 @NoArgsConstructor
-public class Board {
+public class Board extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,15 +25,13 @@ public class Board {
     private String password;
     @Column(name="contents", nullable = false)
     private String contents;
-    @Column(name="date")
-    private Date date;
+
 
     public Board(BoardRequestDto boardrequestDto){
         this.title = boardrequestDto.getTitle();
         this.writer = boardrequestDto.getWriter();
         this.password = boardrequestDto.getPassword();
         this.contents = boardrequestDto.getContents();
-        this.date = boardrequestDto.getDate();
     }
 
     public void update(BoardRequestDto boardRequestDto){
@@ -41,7 +39,6 @@ public class Board {
         this.writer = boardRequestDto.getWriter();
         this.password = boardRequestDto.getPassword();
         this.contents = boardRequestDto.getContents();
-        this.date = boardRequestDto.getDate();
     }
 
 }

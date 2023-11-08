@@ -4,6 +4,7 @@ import com.example.noticeboard.entity.Board;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,7 +14,8 @@ public class BoardResponseDto {
     private String writer;
     private String password;
     private String contents;
-    private Date date;
+    private LocalDateTime createAt;
+    private LocalDateTime modifiedAt;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();
@@ -21,14 +23,8 @@ public class BoardResponseDto {
         this.writer = board.getWriter();
         this.password = board.getPassword();
         this.contents = board.getContents();
-        this.date = board.getDate();
+        this.createAt = board.getCreatedAt();
+        this.modifiedAt = board.getModifiedAt();
     }
 
-    public BoardResponseDto(Long id, String title, String writer, String contents, Date date) {
-        this.id = id;
-        this.title = title;
-        this.writer = writer;
-        this.contents = contents;
-        this.date = date;
-    }
 }
