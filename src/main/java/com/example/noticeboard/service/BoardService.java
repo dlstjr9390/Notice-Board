@@ -1,6 +1,6 @@
 package com.example.noticeboard.service;
 
-import com.example.noticeboard.Repositoty.BoardRepository;
+import com.example.noticeboard.Repository.BoardRepository;
 import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.entity.Board;

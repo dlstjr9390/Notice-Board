@@ -1,13 +1,15 @@
-package com.example.noticeboard.Repositoty;
+package com.example.noticeboard.Repository;
 
 import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.entity.Board;
+import jakarta.persistence.EntityManager;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,6 +106,18 @@ public class BoardRepository {
                 return null;
             }
         },id);
+    }
+
+    @Transactional
+    public Board createBoard(EntityManager em) {
+        Board board = em.find(Board.class, 1);
+        board.setTitle("Hello2");
+        board.setWriter("Robbert2");
+        board.setPassword("159772");
+        board.setContents("@Transactional 테스트 중!2");
+
+        System.out.println("createBoard 메서드 종료");
+        return board;
     }
 
 }
