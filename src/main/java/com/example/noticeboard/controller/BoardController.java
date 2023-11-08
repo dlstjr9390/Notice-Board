@@ -26,10 +26,10 @@ public class BoardController {
         return boardService.getBoards();
     }
 
-    @GetMapping("/board/{id}")
-    public BoardResponseDto detailBoard(@PathVariable Long id){
-        return boardService.detailBoard(id);
-    }
+//    @GetMapping("/board/{id}")
+//    public BoardResponseDto detailBoard(@PathVariable Long id){
+//        return boardService.detailBoard(id);
+//    }
 
     @PutMapping("/board/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto){

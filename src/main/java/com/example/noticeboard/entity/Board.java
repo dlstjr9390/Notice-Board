@@ -28,12 +28,20 @@ public class Board {
     @Column(name="date")
     private Date date;
 
-    public Board(BoardRequestDto requestDto){
-        this.title = requestDto.getTitle();
-        this.writer = requestDto.getWriter();
-        this.password = requestDto.getPassword();
-        this.contents = requestDto.getContents();
-        this.date = requestDto.getDate();
+    public Board(BoardRequestDto boardrequestDto){
+        this.title = boardrequestDto.getTitle();
+        this.writer = boardrequestDto.getWriter();
+        this.password = boardrequestDto.getPassword();
+        this.contents = boardrequestDto.getContents();
+        this.date = boardrequestDto.getDate();
+    }
+
+    public void update(BoardRequestDto boardRequestDto){
+        this.title = boardRequestDto.getTitle();
+        this.writer = boardRequestDto.getWriter();
+        this.password = boardRequestDto.getPassword();
+        this.contents = boardRequestDto.getContents();
+        this.date = boardRequestDto.getDate();
     }
 
 }

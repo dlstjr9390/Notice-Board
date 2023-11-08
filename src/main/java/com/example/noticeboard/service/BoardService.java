@@ -5,6 +5,7 @@ import com.example.noticeboard.dto.BoardRequestDto;
 import com.example.noticeboard.dto.BoardResponseDto;
 import com.example.noticeboard.entity.Board;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class BoardService {
     public BoardResponseDto createBoard(BoardRequestDto requestDto){
         Board board = new Board(requestDto);
 
-        Board insertBoard = boardRepository.insert(board);
+        Board insertBoard = boardRepository.save(board);
 
         BoardResponseDto boardResponseDto = new BoardResponseDto(board);
 
@@ -38,45 +39,43 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> getBoards(){
-        return boardRepository.findAll();
+        return boardRepository.findAll().stream().map(BoardResponseDto::new).toList();
     }
 
-    public BoardResponseDto detailBoard(Long id){
-        Board board = boardRepository.view(id);
-        BoardResponseDto boardResponseDto = new BoardResponseDto(board);
-        return boardResponseDto;
-    }
+//    public BoardResponseDto detailBoard(Long id){
+//        Board board = boardRepository.find(id);
+//        BoardResponseDto boardResponseDto = new BoardResponseDto(board);
+//        return boardResponseDto;
+//    }
 
+    @Transactional
     public Long updateBoard(Long id,BoardRequestDto boardRequestDto){
 
-        Board board = boardRepository.findById(id);
-        if(board != null){
-            if(board.getPassword().equals(boardRequestDto.getPassword())) {
-                boardRepository.update(id,boardRequestDto);
-                return id;
-            } else{
-                throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
-            }
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
+        Board board = findBoard(id);
+        if(board.getPassword().equals(boardRequestDto.getPassword())) {
+            board.update(boardRequestDto);
+            return id;
+        } else{
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
 
     }
 
     public Long deleteBoard(Long id, BoardRequestDto boardRequestDto) {
+        Board board = findBoard(id);
 
-        Board board = boardRepository.findById(id);
-        if(board != null){
-            if(board.getPassword().equals(boardRequestDto.getPassword())) {
-                boardRepository.delete(id);
-                return id;
-            } else{
-                throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
-            }
+        if(board.getPassword().equals(boardRequestDto.getPassword())) {
+            boardRepository.delete(board);
+            return id;
         } else{
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
+
     }
 
-    
+    private Board findBoard(Long id){
+        return boardRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("선택한 글은 존재하지 않습니다.")
+        );
+    }
 }
