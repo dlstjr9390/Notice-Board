@@ -3,6 +3,7 @@ package com.example.noticeboard.service;
 import com.example.noticeboard.Repository.UserRepository;
 import com.example.noticeboard.dto.LoginRequestDto;
 import com.example.noticeboard.dto.SignupRequestDto;
+import com.example.noticeboard.entity.NowUser;
 import com.example.noticeboard.entity.User;
 import com.example.noticeboard.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ public class UserService  {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private JwtUtil jwtUtil;
+
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;

@@ -23,6 +23,8 @@ public class Board extends Timestamped{
     private String writer;
     @Column(name="contents", nullable = false)
     private String contents;
+    @Column(name="isComplete", nullable = false)
+    private boolean isComplete;
 
 
     public Board(BoardRequestDto boardrequestDto){
@@ -33,8 +35,11 @@ public class Board extends Timestamped{
 
     public void update(BoardRequestDto boardRequestDto){
         this.title = boardRequestDto.getTitle();
-        this.writer = boardRequestDto.getWriter();
         this.contents = boardRequestDto.getContents();
+    }
+
+    public void complete(){
+        this.isComplete = true;
     }
 
 }
