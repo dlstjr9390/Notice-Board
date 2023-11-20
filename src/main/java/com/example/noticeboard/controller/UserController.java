@@ -32,7 +32,7 @@ public class UserController {
         res.setStatus(200);
         return "로그인 완료" ;
     }
-    //todo 반환할거 생각해보기
+
     @PostMapping("/signup")
     public String signup(@RequestBody @Valid SignupRequestDto requestDto, BindingResult bindingResult){
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -40,11 +40,9 @@ public class UserController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            String no = "회원가입 실패";
-            return no;
+            return "회원가입 실패";
         }
         userService.signup(requestDto);
-        String ok = "회원가입 완료";
-        return ok;
+        return "회원가입 완료";
     }
 }

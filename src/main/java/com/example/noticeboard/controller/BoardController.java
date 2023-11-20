@@ -47,15 +47,10 @@ public class BoardController {
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto){
         return boardService.updateBoard(id,boardRequestDto);
     }
-//
-//
-//    @DeleteMapping("/board/{id}")
-//    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto ){
-//        return boardService.deleteBoard(id,boardRequestDto);
-//    }
+
 
     //todo 할일카드 완료 기능
-    // 유효토큰, 작성자만 완료 가능, 목록 조회시 완료 여푸 필드가 TRUE
+    // 유효토큰, 작성자만 완료 가능, 목록 조회시 완료 여부 필드가 TRUE
     @PutMapping("/board/complete/{id}")
     public Long completeBoard(@PathVariable Long id){
         return boardService.completeBoard(id);

@@ -49,23 +49,11 @@ public class BoardService {
 
     @Transactional
     public Long updateBoard(Long id,BoardRequestDto boardRequestDto){
-
         Board board = findBoard(id);
-            return id;
+        board.update(boardRequestDto);
 
+        return id;
     }
-//
-//    public Long deleteBoard(Long id, BoardRequestDto boardRequestDto) {
-//        Board board = findBoard(id);
-//
-//        if(board.getPassword().equals(boardRequestDto.getPassword())) {
-//            boardRepository.delete(board);
-//            return id;
-//        } else{
-//            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
-//        }
-//
-//    }
 
     private Board findBoard(Long id){
         return boardRepository.findById(id).orElseThrow(()->
@@ -76,7 +64,11 @@ public class BoardService {
     @Transactional
     public Long completeBoard(Long id) {
         Board board = findBoard(id);
+        if(!board.isComplete()) {
             board.complete();
+        } else{
+            throw new IllegalArgumentException("이미 완료된 할일입니다.");
+        }
             return id;
 
     }
